@@ -1,0 +1,92 @@
+<?php 
+if (is_null($type)){
+	$name = 'test';
+}else{
+	$name = 'p'.$type;
+}?>
+<div class="x_panel">
+	<div class="x_title">
+		<h2>
+			<?php echo $this->translate('DIM'.$type,'labels'); ?>
+			<small></small>
+		</h2>
+		<ul class="nav navbar-right panel_toolbox">
+			<li>
+				<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+			</li>
+		</ul>
+		<div class="clearfix"></div>
+	</div>
+
+	<div class="x_content">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="col-md-5 col-sm-5 col-xs-12">
+				<table class="table">
+				<thead>
+					<tr>
+						<th></th>
+					<?php foreach($academicyears as $year){
+							echo '<th>'.substr_replace($year, '-', 4, 0).'</th>';
+					} ?>
+				</thead>
+		
+				<?php foreach($avis as $nre => $aviselements){ ?>
+					<tr>
+						<td><?php echo $courses[$nre]['mnemonique']?></td>
+						<?php
+						rsort($academicyears); 
+						foreach($academicyears as $year) {
+							echo '<td>';
+							if (isset($aviselements[$year]['1'])){
+								$url1 = $this->url('display/display3',array('context' => $assessments[$year]['1'].':'.$courses[$nre]['courseid'][$year].':'.$type));
+								echo $this->indicators('circle',$aviselements[$year]['1'],$url1);
+							}
+							if (isset($aviselements[$year]['2'])){
+								$url2 = $this->url('display/display3',array('context' => $assessments[$year]['2'].':'.$courses[$nre]['courseid'][$year].':'.$type));
+								//$url2 = 'display3/'.$assessments[$year]['2'].':'.$courses[$nre]['courseid'][$year].':'.$type;
+								echo $this->indicators('circle',$aviselements[$year]['2'],$url2);
+							}
+							echo '</td>';
+						}?>
+					</tr>
+				<?php }?>
+				</table>
+			</div>
+			<div class="col-md-1 col-sm-1 col-xs-12">
+			</div>
+			<div class="col-md-6 col-sm-6 col-xs-12 left_border">
+				<h2><?php echo $this->translate('AVISCIRC','labels')?></h2>
+				</br>
+				<form>
+				<div class="text-center">
+					<div class="btn-group-vertical" data-toggle="buttons">
+						<label class="btn btn-default btn-verygood" >
+							<input id="option1" name="options" type="radio">
+							<?php echo $this->translate('CIRC_TRESFAV','labels')?>
+						</label>
+						<label class="btn btn-default btn-good">
+							<input id="option2" name="options" type="radio">
+							<?php echo $this->translate('CIRC_FAV','labels')?>
+						</label>
+						<label class="btn btn-default btn-bad">
+							<input id="option3" name="options" type="radio">
+							<?php echo $this->translate('CIRC_DEFAV','labels')?>
+						</label>
+						<label class="btn btn-default btn-na">
+							<input id="option3" name="options" type="radio">
+							<?php echo $this->translate('CIRC_NA','labels')?>
+						</label>
+					</div>
+				</div>
+				</br>
+					<h4><?php echo $this->translate('COMMENT','labels');?></h4>
+					<label for="message"><small>(100 max)</small></label>
+                          <textarea id="message" required="required" class="form-control" name="message" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.."
+                            data-parsley-validation-threshold="10"></textarea>
+				</br>
+					<span class="btn btn-primary"><?php echo $this->translate('SAVE','labels')?></span>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

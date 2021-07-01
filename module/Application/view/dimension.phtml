@@ -1,0 +1,248 @@
+<?php 
+if (is_null($type)){
+	$name = 'test';
+}else{
+	$name = 'p'.$type;
+}
+$avisactive = "";
+$commentsactive = "";
+$resourcesactive = "";
+if (isset($avis)){
+	$avisactive = "active";
+}else if (isset($resource)){
+	$resourcesactive = "active";
+}else { 
+	$commentsactive = "active";
+};
+$height = 50*count($questions) + 100;
+
+?>
+
+<div class="x_content">
+<div class="col-md-6 col-sm-6 col-xs-12">
+	<div id="<?php echo $name;?>"  style="height:<?php echo $height;?>px;"></div>
+</div>
+<div class="col-md-6 col-sm-6 col-xs-12">
+	<div class="col-xs-3">
+    <!-- required for floating -->
+    <!-- Nav tabs -->
+	    <ul class="nav nav-tabs tabs-left">
+	    <?php if (isset($avis)){ ?>
+        	<li class="<?php echo $avisactive;?>"><a href="<?php echo '#avis'.$name;?>" data-toggle="tab"><?php echo $this->translate('AVIS','labels')?></a>
+            </li>
+        <?php } ?>
+        <?php if (isset($comments)){ ?>
+        	<li class="<?php echo $commentsactive;?>"><a href="<?php echo '#comments'.$name;?>" data-toggle="tab"><?php echo $this->translate('COMMENTS','labels')?></a>
+            </li>
+        <?php } ?>
+        <?php if (isset($resources)){ ?>
+        	<li class="<?php echo $resourcesactive;?>"><a href="<?php echo '#resources'.$name;?>" data-toggle="tab"><?php echo $this->translate('RESOURCES','labels')?></a>
+            </li>
+        <?php } ?>
+        </ul>
+	</div>
+	
+	<div class="col-xs-9">
+    <!-- Tab panes TODO active pane -->
+    	<div class="tab-content">
+    	<?php if (isset($avis)){ ?>
+        	<div class="tab-pane <?php echo $avisactive;?>" id="<?php echo 'avis'.$name;?>" style="height:350px;overflow-y: auto;">
+	                   <p class="lead"></p>
+	                   <p><?php echo $this->indicators('circle',$avis)?> </p>
+	<!--                   <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+					<div class="btn-group-vertical" data-toggle="buttons">
+						<label class="btn btn-default btn-verygood" >
+							<input id="option1" name="options" type="radio">
+							<?php echo $this->translate('AVIS_VERYGOOD','labels')?>
+						</label>
+						<label class="btn btn-default btn-good">
+							<input id="option2" name="options" type="radio">
+							<?php echo $this->translate('AVIS_GOOD','labels')?>
+						</label>
+						<label class="btn btn-default btn-average">
+							<input id="option3" name="options" type="radio">
+							<?php echo $this->translate('AVIS_AVERAGE','labels')?>
+						</label>
+						<label class="btn btn-default btn-bad">
+							<input id="option3" name="options" type="radio">
+							<?php echo $this->translate('AVIS_BAD','labels')?>
+						</label>
+					</div>
+				</div>      -->       
+			</div>
+		<?php } ?>
+		<?php if (isset($comments)){ ?>
+        	<div class="tab-pane <?php echo $commentsactive;?>" id="<?php echo 'comments'.$name;?>" style="height:350px;overflow-y: auto;">
+	                   <p class="lead"></p>
+	                   <?php
+	                   if (count($comments) == 0){
+							echo '<p>'.$this->translate('NOCOMMENT','labels').'</p>';
+						}else{
+							echo '<ul>';
+	                   		foreach($comments as $comment){
+	                   			echo '<li>'.$comment.'</li>';
+	                   		}
+	                   		echo '</ul>';
+	                   	}
+	                   		 ?>
+			</div>
+		<?php } ?>
+		<?php if (isset($resources)){ ?>
+        	<div class="tab-pane <?php echo $resourcesactive;?>" id="<?php echo 'resources'.$name;?>" style="height:350px;overflow-y: auto;">
+	                   <p class="lead"></p>
+			</div>
+		<?php } ?>
+		</div>
+	</div>	
+</div>
+</div>
+
+<?php
+$questionlabels = "";
+$verygood = "";
+$good = "";
+$average = "";
+$bad = "";
+$na = "";
+$i = 0;
+foreach ($questions as $qid){
+	if (isset($answers[$qid])){ // au cas ou la question a été ajoutée par après / ou TODO refaire les structures pour les != campagne
+		if ($i != 0){
+			$questionlabels .= ',';
+			$verygood .= ',';
+			$good .= ',';
+			$average .= ',';
+			$bad .= ',';
+			$na .= ',';
+		}
+		$i++;
+	
+		$questionlabels .= '"Q'.$qid.'"';
+		$verygood .= $answers[$qid]['4'];
+		$good .= $answers[$qid]['3'];
+		$average .= '-'.$answers[$qid]['2'];
+		$bad .= '-'.$answers[$qid]['1'];
+		$na .= $answers[$qid]['5'];
+	}
+}
+?>
+<script>
+var option = {
+	    tooltip : {
+	        trigger: 'axis',
+	        //formatter : function(params){ 
+		        //params[0] = '1';//Math.abs(params[0]);
+		    //    return params;
+	        //},
+	        axisPointer : {            //
+	            type : 'shadow'        //'line' | 'shadow'
+	        }
+	    },
+	    legend: {
+	        //data:['average', 'good', 'very good', 'bad', 'not applicable']
+	    },
+	    toolbox: {
+	        //show : true,
+	        feature : {
+	            //mark : {show: true},
+	            //dataView : {show: true, readOnly: false},
+	            //magicType : {show: true, type: ['line', 'bar']},
+	            //restore : {show: true},
+	            //saveAsImage : {show: true}
+	        }
+	    },
+	    calculable : true,
+	    xAxis : [
+	        {
+	            type : 'value',
+	            axisLabel : {
+		            formatter: function(value){ return (Math.abs(value)+'%')}, //'{value}%'
+	            }
+	        }
+	    ],
+	    yAxis : [
+	        {
+	            type : 'category',
+	            axisTick : {show: false},
+	            data : [<?php echo $questionlabels?>],
+	            splitLine : {show : false}
+	        }
+	    ],
+	    series : [
+	        {
+	            name:'average',
+	            type:'bar',
+	            stack: 'test',
+	            barWidth : 20,
+	            itemStyle: {normal: {
+	                label : {show: false, position: 'inside'},
+	                color : '#ffbf00'
+	            }},
+	            data:[<?php echo $average?>]
+	        },
+	        {
+	            name:'good',
+	            type:'bar',
+	            stack: 'test',
+	            barWidth : 20,
+	            itemStyle: {normal: {
+	                label : {show: false},
+            		color : '#74df00'
+	            }},
+	            data:[<?php echo $good?>]
+	        },
+	        {
+	            name:'very good',
+	            type:'bar',
+	            stack: 'test',
+	            barWidth : 20,
+	            itemStyle : { normal: {
+		            label : {show: false, position: 'inside'},
+		            color : '#347819'
+			    }},
+	            data:[<?php echo $verygood?>]
+	        },
+	        {
+	            name:'bad',
+	            type:'bar',
+	            stack: 'test',
+	            barWidth : 20,
+	            itemStyle: {normal: {
+	                label : {show: false, position: 'inside'},
+            		color : '#df0101'
+	            }},
+	            data:[<?php echo $bad?>]
+	        },
+	        {
+	            name:'not applicable',
+	            type:'bar',
+	            stack: 'test',
+	            barWidth : 20,
+	            itemStyle: {normal: {
+	                label : {show: false, position: 'inside'},
+	                color : '#848484'
+	            }},
+	            data:[<?php echo $na?>]
+	        }
+	    ]
+	};
+
+    	var theme = {
+
+    	    bar: {
+    	        itemStyle: {
+    	            normal: {
+    	                barBorderRadius: 2
+    	            },
+    	            emphasis: {
+    	                barBorderRadius: 2
+    	            }
+    	        }
+    	    },
+    	    
+    	};
+
+    var echartBar = echarts.init(document.getElementById('<?php echo $name; ?>'), theme);
+    echartBar.setOption(option, 'macarons');
+
+</script>

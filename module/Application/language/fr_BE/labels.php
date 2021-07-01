@@ -1,0 +1,32 @@
+<?php
+ 
+return array(
+    'Add' => 'OK',
+    'Firstname' => 'Prénom',
+    'AVIS_VERYGOOD' => 'Particulièrement positif',
+    'AVIS_GOOD' => 'Positive',
+    'AVIS_AVERAGE' => 'Positive avec points d\'attention',
+    'AVIS_BAD' => 'Problématique',
+    'AVIS_NA' => 'Sans objet par manque de données'    ,
+    'CIRC_TRESFAV' => 'Très favorable',
+    'CIRC_FAV' => 'Favorables',
+    'CIRC_DEFAV' => 'Défavorable',
+    'CIRC_NA' => 'Sans objet',
+    'COMMENT' => 'Commentaire',
+    'DIM1' => 'Organisation de l\'enseignement',
+    'DIM2' => 'Déroulement des séances',
+    'DIM3' => 'Evaluation des apprentissages(examen)',
+    'DIM4' => 'Prestation',
+    'PROFILE_LITE' => ' ',
+    'AVISCIRC' => 'Avis de la commission',
+    'SAVE' => 'Save',
+    'CLOSE' => 'Fermer',
+    'ACADEMICYEAR' => ' ',
+    'QUADRI' => 'quadri',
+    'NOCOMMENT' => 'Aucun commentaire à afficher',
+    'AVIS' => 'Avis',
+    'COMMENTS' => 'Commentaires',
+    'RESOURCEs' => 'Ressources',
+    'NEXT' => 'Suivant',
+    'PREVIOUS' => 'Précédent'
+);

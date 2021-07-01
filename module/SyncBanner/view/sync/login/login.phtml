@@ -1,0 +1,67 @@
+    <div class="">
+      <a class="hiddenanchor" id="toregister"></a>
+      <a class="hiddenanchor" id="tologin"></a>
+
+      <div id="wrapper">
+        <div id="login" class=" form">
+          <section class="login_content">
+          
+          <?php $form = $this->form; ?>     
+			<?php echo $this->form()->openTag($form);?>
+			
+              <h1>Login Form</h1>
+              <div>
+              	<?php
+    				$name = $form->get('id');
+    				echo $this->formInput($name);
+				?>
+              <!--   <input type="text" class="form-control" placeholder="Username" required="" />  -->
+              </div>
+              <div>
+              	<?php
+    				$name = $form->get('username');
+    				$name->setAttributes(array('placeholder' => $name->getLabel(),
+												'class' => 'form-control'
+											));
+    				echo $this->formInput($name);
+				?>
+              </div>
+              <div>
+              <?php
+    				$name = $form->get('password');
+    				$name->setAttributes(array('placeholder' => $name->getLabel(),
+												'class' => 'form-control'
+											));
+    				echo $this->formInput($name);
+				?> 
+              </div>
+              <div>
+              	<?php foreach ($this->messages as $key => $message){
+					echo $key.':'.$this->translate($message,'login');
+					}
+					?>
+              </div>
+              <div>
+              	<?php
+    				$name = $form->get('submit');
+    				$name->setAttributes(array('class' => 'btn btn-default submit'
+											));
+    				echo $this->formInput($name);
+				?> 
+                <a class="reset_pass" href="#">Lost your password?</a>
+              </div>
+              <div class="clearfix"></div>
+              <div class="separator">
+
+                <div class="clearfix"></div>
+                <br />
+                <div>
+                  <p>©2015 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+                </div>
+              </div>
+            <?php echo $this->form()->closeTag();?>
+            
+          </section>
+        </div>
+      </div>
+    </div>

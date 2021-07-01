@@ -1,0 +1,20 @@
+<?php
+foreach ($this->container as $page){ 
+	if ($this->navigation()->accept($page)){ //si resource n'est pas defini => =null?> 
+		<div class="menu_section">
+			<h3><?php echo $page->getLabel(); ?></h3>
+			<ul class="nav side-menu">
+			<?php foreach ($page as $subpage){ ?>
+				<li <?php echo $subpage->isActive()? 'class="active"' : 'class="drop"' ?>><a><i class="fa <?php echo $subpage->get('icon'); ?>"></i><?php echo $subpage->getLabel(); ?><span class="fa fa-chevron-down"></span></a>
+				<ul class="nav child_menu">
+					<?php foreach ($subpage as $subsubpage){ ?>
+                      <li><?php echo $this->navigation()->menu()->htmlify($subpage). PHP_EOL ?>
+                      </li>
+                     <?php }?>
+                    </ul>
+				</li>
+			<?php } ?>
+		</ul>
+	</div>
+	<?php } ?>
+<?php } ?>
